@@ -1,0 +1,72 @@
+[build-system]
+requires = ["hatchling>=1.27"]
+build-backend = "hatchling.build"
+
+[project]
+name = "tide-rewriter"
+version = "0.1.0"
+description = "Task-conditioned privacy rewriting with a FLAN-T5 matrix bottleneck"
+readme = "README.md"
+requires-python = ">=3.10,<3.13"
+license = {text = "MIT"}
+authors = [{name = "TIDE contributors"}]
+dependencies = [
+  "accelerate==1.8.1",
+  "datasets==3.6.0",
+  "huggingface-hub==0.33.2",
+  "numpy==2.2.6",
+  "openai==1.93.0",
+  "peft==0.16.0",
+  "pydantic==2.11.7",
+  "python-dotenv==1.1.1",
+  "PyYAML==6.0.2",
+  "safetensors==0.5.3",
+  "sentencepiece==0.2.0",
+  "torch==2.7.0",
+  "transformers==4.53.2",
+]
+
+[project.optional-dependencies]
+dev = [
+  "mypy==1.16.1",
+  "pytest==8.4.1",
+  "pytest-cov==6.2.1",
+  "ruff==0.12.2",
+]
+
+[project.scripts]
+tide = "tide.cli:main"
+tide-download-data = "tide.download_data:main"
+tide-download-models = "tide.download_models:main"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/tide"]
+
+[tool.pytest.ini_options]
+addopts = "-ra --strict-markers"
+testpaths = ["tests"]
+
+[tool.ruff]
+line-length = 100
+target-version = "py310"
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "UP", "B", "SIM", "RUF"]
+
+[tool.mypy]
+python_version = "3.10"
+strict = true
+packages = ["tide"]
+
+[[tool.mypy.overrides]]
+module = [
+  "tide.annotate",
+  "tide.cli",
+  "tide.download_data",
+  "tide.diagnose",
+  "tide.evaluate",
+  "tide.models",
+  "tide.rewrite",
+  "tide.train",
+]
+ignore_errors = true

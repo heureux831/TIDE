@@ -1,0 +1,25 @@
+{
+  "joint_label_counts": {
+    "dev/NO/NO": 13,
+    "dev/NO/YES": 12,
+    "dev/YES/NO": 12,
+    "dev/YES/YES": 13,
+    "test/NO/NO": 12,
+    "test/NO/YES": 13,
+    "test/YES/NO": 13,
+    "test/YES/YES": 12,
+    "train/NO/NO": 50,
+    "train/NO/YES": 50,
+    "train/YES/NO": 50,
+    "train/YES/YES": 50
+  },
+  "source_count": 300,
+  "sources_sha256": "9b0ae326bcb3cae957a67d1169eb1a4effe4c48a5e6577ff3b030e1ae371d5ff",
+  "split_source_counts": {
+    "dev": 50,
+    "test": 50,
+    "train": 200
+  },
+  "task_record_count": 600,
+  "valid": true
+}

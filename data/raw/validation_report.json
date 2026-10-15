@@ -1,0 +1,30 @@
+{
+  "annotated_split_counts": {},
+  "annotation_errors": [],
+  "annotations_frozen": false,
+  "identity_duplicate_counts": {
+    "f_address": 0,
+    "f_email": 0,
+    "f_name": 0
+  },
+  "source_count": 300,
+  "source_errors": {},
+  "source_frozen": true,
+  "split_source_counts": {
+    "dev": 50,
+    "test": 50,
+    "train": 200
+  },
+  "task_record_count": 600,
+  "template_counts": {
+    "dev": 4,
+    "test": 4,
+    "train": 16
+  },
+  "template_overlap": {
+    "dev/test": [],
+    "train/dev": [],
+    "train/test": []
+  },
+  "valid": true
+}
