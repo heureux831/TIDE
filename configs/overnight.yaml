@@ -43,6 +43,7 @@ training:
   micro_batch_size: 8
   gradient_accumulation_steps: 2
   max_optimizer_steps: 300
+  debug_max_optimizer_steps: 200
   learning_rate_lora: 0.0002
   learning_rate_matrix: 0.0003
   optimizer: adamw

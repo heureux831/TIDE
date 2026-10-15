@@ -57,3 +57,14 @@ implementation is worth continuing. It does not by itself show M2 beats M1.
 
 The report separately states whether the code path ran, whether engineering
 thresholds were met, and whether an additional M2 benefit over M1 was supported.
+
+## Versioned continuation after the first gate failure
+
+The 2026-10-16 v1 run is preserved as a failed prespecified experiment: M1
+reached 100% FactJoint at 200 updates while M2 reached 3.125%. A separately
+labelled capacity diagnostic showed that unchanged M2 reached 100% at 500
+updates under a 600-step scheduler horizon. It is therefore permissible to run
+the post-hoc `configs/overnight_v2.yaml` continuation with a 500-update debug
+budget. No other model, data, loss, formal-training, or evaluation setting is
+changed. V2 is reported separately and does not retroactively turn v1 into a
+pass.

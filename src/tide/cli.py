@@ -255,6 +255,7 @@ def command_debug(args: argparse.Namespace) -> int:
     config, root = _common(args)
     from tide.train import train_variant
 
+    debug_steps = args.steps or config.training.debug_max_optimizer_steps
     results = []
     for variant in ("M1_FLAN_T5_LORA", "M2_FLAN_T5_MATRIX"):
         result = train_variant(
@@ -263,7 +264,7 @@ def command_debug(args: argparse.Namespace) -> int:
             variant,
             resume=args.resume,
             debug_examples=args.examples,
-            max_steps=args.steps,
+            max_steps=debug_steps,
         )
         results.append(result)
     passed = all(result["best"] and result["best"][0] >= 0.9 for result in results)
@@ -343,7 +344,7 @@ def command_run(args: argparse.Namespace) -> int:
         (
             "debug",
             lambda: command_debug(
-                argparse.Namespace(config=args.config, examples=32, steps=200, resume=args.resume)
+                argparse.Namespace(config=args.config, examples=32, steps=None, resume=args.resume)
             ),
         ),
     ]
@@ -454,7 +455,11 @@ def build_parser() -> argparse.ArgumentParser:
     train.set_defaults(handler=command_train)
     debug = configured("debug", "Overfit M1 and M2 on a 32-example implementation gate")
     debug.add_argument("--examples", type=int, default=32)
-    debug.add_argument("--steps", type=int, default=200)
+    debug.add_argument(
+        "--steps",
+        type=int,
+        help="Override training.debug_max_optimizer_steps from the selected config",
+    )
     debug.add_argument("--resume", action="store_true")
     debug.set_defaults(handler=command_debug)
     evaluate = configured("evaluate", "Run independent Qwen task evaluation")
@@ -482,6 +487,7 @@ def build_parser() -> argparse.ArgumentParser:
 
 
 def main(argv: list[str] | None = None) -> None:
+    os.environ.setdefault("TOKENIZERS_PARALLELISM", "false")
     args = build_parser().parse_args(argv)
     raise SystemExit(args.handler(args))
 

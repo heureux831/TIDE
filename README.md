@@ -131,3 +131,7 @@ and [the server runbook](docs/SERVER_RUNBOOK.md) for the exact handoff sequence.
 The first GPU run is documented in
 [the 2026-10-16 feasibility report](docs/FEASIBILITY_RUN_2026-10-16.md); it
 stopped at the mandatory M2 debug gate rather than overstating a partial result.
+The versioned `configs/overnight_v2.yaml` continuation changes only that debug
+budget from 200 to 500 updates and writes to `runs/overnight_v2`.
+Its completed result, including the optional M3 run, is documented in
+[the v2 feasibility report](docs/FEASIBILITY_V2_RESULT_2026-10-16.md).

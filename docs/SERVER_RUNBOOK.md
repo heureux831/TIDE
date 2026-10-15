@@ -74,6 +74,13 @@ tide run --config configs/overnight.yaml --stage all --resume
 `run` records `runs/overnight/status.json` and stops with a non-zero exit on the
 first failed gate. M3 runs only with `--include-optional`.
 
+The post-hoc continuation uses its own output directory and configured
+500-update debug budget:
+
+```bash
+tide run --config configs/overnight_v2.yaml --stage all --resume
+```
+
 For manual stage execution, use `tide --help`. Training checkpoints include the
 trainable state, optimizer, scheduler, RNG states, exact training position,
 effective configuration, data digest, and selection metric. Resume rejects a

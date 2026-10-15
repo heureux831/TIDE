@@ -1,0 +1,78 @@
+experiment:
+  seed: 42
+  matrix_init_seed: 1042
+  output_dir: runs/overnight_v2
+  mandatory_variants: [M1_FLAN_T5_LORA, M2_FLAN_T5_MATRIX]
+  optional_variants: [M3_FLAN_T5_MATRIX_AUX]
+data:
+  source_count: 300
+  split_source_counts: {train: 200, dev: 50, test: 50}
+  tasks_per_source: 2
+  input_max_tokens: 512
+  output_max_tokens: 96
+  reject_truncation: true
+annotation:
+  model_env: DEEPSEEK_MODEL
+  default_model: deepseek-flash
+  concurrency: 4
+  timeout_seconds: 90
+  max_output_tokens: 1600
+  max_transport_attempts: 4
+  max_semantic_repairs: 2
+  max_api_requests: 900
+  max_estimated_usd: 5.0
+model:
+  backbone_env: FLAN_T5_MODEL_ID
+  backbone: google/flan-t5-base
+  revision_env: FLAN_T5_REVISION
+  revision: main
+  precision: bf16_autocast
+  freeze_encoder: true
+  freeze_shared_embeddings: true
+  freeze_lm_head: true
+  lora_rank: 16
+  lora_alpha: 32
+  lora_dropout: 0.05
+  bottleneck_slots: 64
+  bottleneck_heads: 8
+  bottleneck_layers: 1
+  bottleneck_ffn_dim: 1536
+  gate_hidden_dim: 256
+  gate_bias_init: 2.0
+training:
+  micro_batch_size: 8
+  gradient_accumulation_steps: 2
+  max_optimizer_steps: 300
+  debug_max_optimizer_steps: 500
+  learning_rate_lora: 0.0002
+  learning_rate_matrix: 0.0003
+  optimizer: adamw
+  weight_decay: 0.01
+  warmup_steps: 15
+  scheduler: linear
+  max_grad_norm: 1.0
+  log_every_steps: 10
+  eval_every_steps: 50
+  save_every_steps: 50
+  gradient_checkpointing: false
+  dataloader_num_workers: 2
+loss:
+  text_weight: 1.0
+  m3_keep_weight: 0.05
+  m3_hide_weight: 0.05
+generation:
+  do_sample: false
+  num_beams: 1
+  max_new_tokens: 96
+evaluation:
+  task_model_env: QWEN_TASK_MODEL_ID
+  task_model: Qwen/Qwen3-8B
+  task_revision_env: QWEN_TASK_MODEL_REVISION
+  task_revision: main
+  task_dtype: bfloat16
+  task_batch_size: 4
+  task_input_max_tokens: 1024
+  task_max_new_tokens: 16
+  task_enable_thinking: false
+  bootstrap_replicates: 1000
+  bootstrap_seed: 2026

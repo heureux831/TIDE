@@ -72,6 +72,7 @@ class TrainingConfig(StrictModel):
     micro_batch_size: int
     gradient_accumulation_steps: int
     max_optimizer_steps: int
+    debug_max_optimizer_steps: int = Field(default=200, gt=0)
     learning_rate_lora: float
     learning_rate_matrix: float
     optimizer: Literal["adamw"]

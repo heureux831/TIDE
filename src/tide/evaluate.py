@@ -52,6 +52,11 @@ class QwenTaskEvaluator:
             .to(device)
             .eval()
         )
+        # Some model snapshots persist sampling-only defaults. They are ignored
+        # under greedy decoding but otherwise produce one warning per batch.
+        self.model.generation_config.temperature = None
+        self.model.generation_config.top_p = None
+        self.model.generation_config.top_k = None
         self.config = config
         self.device = device
         self.checkpoint_id = f"{source}@{revision}"
