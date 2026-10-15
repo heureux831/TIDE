@@ -22,7 +22,7 @@ dependencies = [
   "PyYAML==6.0.2",
   "safetensors==0.5.3",
   "sentencepiece==0.2.0",
-  "torch==2.7.0",
+  "torch>=2.7.0,<2.12",
   "transformers==4.53.2",
 ]
 

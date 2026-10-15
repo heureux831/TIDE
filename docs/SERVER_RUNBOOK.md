@@ -15,21 +15,37 @@ cp .env.example .env
 The bootstrap script installs PyTorch 2.7.0 from the official CUDA 12.8 wheel
 index, installs the pinned project dependencies, and runs `pip check`.
 
+For a dedicated server whose base environment already exposes a working CUDA
+PyTorch, keep that installation and use:
+
+```bash
+TIDE_USE_CURRENT_ENV=1 TIDE_PYTHON_BIN=/root/miniconda3/bin/python \
+  ./scripts/bootstrap_server.sh
+```
+
+This validates CUDA before installing the project. The current experiment used
+base Python 3.12.3 with PyTorch 2.11.0+cu130; the exact versions are captured by
+`tide preflight`.
+
 ## 2. Models
 
 ```bash
 ./scripts/download_models.sh
 ```
 
-Each download resolves the configured Hub revision to an immutable commit and
-writes a local manifest. Model files remain outside Git.
+The default `auto` mode tries ModelScope, `hf-mirror.com`, and the official
+Hugging Face Hub in that order. Override it with, for example,
+`TIDE_MODEL_PROVIDER=hf-mirror ./scripts/download_models.sh`. Each successful
+download writes a local manifest with its channel, revision, and file hashes.
+Model files remain outside Git.
 
 ## 3. Deep hardware check
 
 ```bash
-source .venv/bin/activate
 tide preflight --config configs/overnight.yaml --deep
 ```
+
+Activate `.venv` first only when the isolated bootstrap path was used.
 
 Stop if the GPU name is not `RTX PRO 6000 Blackwell`, BF16 backward fails, the
 FLAN-T5 batch fails, free disk is inadequate, or credentials are unavailable.

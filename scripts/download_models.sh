@@ -13,5 +13,5 @@ if ! command -v tide-download-models >/dev/null 2>&1; then
   exit 1
 fi
 
-tide-download-models --model flan-t5
-tide-download-models --model qwen
+tide-download-models --model flan-t5 --provider "${TIDE_MODEL_PROVIDER:-auto}"
+tide-download-models --model qwen --provider "${TIDE_MODEL_PROVIDER:-auto}"

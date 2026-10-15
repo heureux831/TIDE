@@ -34,6 +34,14 @@ source .venv/bin/activate
 uv pip install -e '.[dev]'
 ```
 
+On a dedicated GPU server whose base environment already has a CUDA-capable
+PyTorch, reuse it without creating another environment:
+
+```bash
+TIDE_USE_CURRENT_ENV=1 TIDE_PYTHON_BIN=/root/miniconda3/bin/python \
+  ./scripts/bootstrap_server.sh
+```
+
 Record the environment and generate the controlled dataset:
 
 ```bash
@@ -54,15 +62,18 @@ Preview model downloads without network writes:
 tide-download-models --model all --dry-run
 ```
 
-Download immutable snapshots after filling `.env`:
+Download model snapshots after filling `.env`:
 
 ```bash
-tide-download-models --model flan-t5
-tide-download-models --model qwen
+./scripts/download_models.sh
 ```
 
-Each model directory gets `tide_download_manifest.json` containing the resolved
-Hub commit. Downloaded weights live under ignored `models/`.
+The downloader supports `--provider auto|modelscope|hf-mirror|huggingface`.
+`auto` tries an installed ModelScope client first, then `hf-mirror.com`, then the
+official Hugging Face Hub. Set `TIDE_MODEL_PROVIDER` to force a channel. Each
+model directory gets `tide_download_manifest.json` containing the selected
+provider, revision, sizes, and SHA-256 hashes. Downloaded weights live under
+ignored `models/`.
 
 For later extensions, small auditable source samples can be downloaded separately:
 
@@ -117,3 +128,6 @@ deliberately; use a release or external artifact store for large checkpoints.
 
 See [the experiment contract](docs/EXPERIMENT.md) for the fixed scientific scope
 and [the server runbook](docs/SERVER_RUNBOOK.md) for the exact handoff sequence.
+The first GPU run is documented in
+[the 2026-10-16 feasibility report](docs/FEASIBILITY_RUN_2026-10-16.md); it
+stopped at the mandatory M2 debug gate rather than overstating a partial result.
