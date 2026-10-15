@@ -251,6 +251,27 @@ def command_train(args: argparse.Namespace) -> int:
     return 0
 
 
+def command_v3_audit(args: argparse.Namespace) -> int:
+    config, root = _common(args)
+    from tide.v3_long_m2 import assert_v3_protocol, audit_v2_failures
+
+    v2 = load_config(args.v2_config)
+    assert_v3_protocol(v2, config)
+    result = audit_v2_failures(v2, config, root)
+    print(json.dumps(result, indent=2, sort_keys=True))
+    return 0
+
+
+def command_v3_train(args: argparse.Namespace) -> int:
+    config, root = _common(args)
+    from tide.v3_long_m2 import train_v3
+
+    v2 = load_config(args.v2_config)
+    result = train_v3(v2, config, root)
+    print(json.dumps(result, indent=2, sort_keys=True))
+    return 0
+
+
 def command_debug(args: argparse.Namespace) -> int:
     config, root = _common(args)
     from tide.train import train_variant
@@ -453,6 +474,12 @@ def build_parser() -> argparse.ArgumentParser:
     )
     train.add_argument("--resume", action="store_true")
     train.set_defaults(handler=command_train)
+    v3_audit = configured("v3-audit", "Audit 20 fixed V2 train failures before V3")
+    v3_audit.add_argument("--v2-config", type=Path, default=Path("configs/overnight_v2.yaml"))
+    v3_audit.set_defaults(handler=command_v3_audit)
+    v3_train = configured("v3-train", "Run the isolated long-budget M2 fitting diagnostic")
+    v3_train.add_argument("--v2-config", type=Path, default=Path("configs/overnight_v2.yaml"))
+    v3_train.set_defaults(handler=command_v3_train)
     debug = configured("debug", "Overfit M1 and M2 on a 32-example implementation gate")
     debug.add_argument("--examples", type=int, default=32)
     debug.add_argument(

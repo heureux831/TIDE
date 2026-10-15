@@ -1,0 +1,58 @@
+{
+  "best_selection": {
+    "primary": "dev_fact_joint_max",
+    "tie_break": "dev_text_loss_min"
+  },
+  "best_step": 800,
+  "elapsed_seconds": 224.6514804214239,
+  "final_metrics": {
+    "dev_fact_joint": 0.94,
+    "dev_required_fact_recall": 0.97,
+    "dev_text_loss": 0.18816008376888932,
+    "elapsed_seconds": 224.34578324109316,
+    "step": 800,
+    "train_fact_joint": 0.9975,
+    "train_required_fact_recall": 0.99875,
+    "train_text_loss": 0.004129613949917257
+  },
+  "global_step": 800,
+  "protocol": {
+    "effective_batch_size": 16,
+    "protocol_changes": {
+      "experiment.mandatory_variants": {
+        "v2": [
+          "M1_FLAN_T5_LORA",
+          "M2_FLAN_T5_MATRIX"
+        ],
+        "v3": [
+          "M2_FLAN_T5_MATRIX"
+        ]
+      },
+      "experiment.optional_variants": {
+        "v2": [
+          "M3_FLAN_T5_MATRIX_AUX"
+        ],
+        "v3": []
+      },
+      "experiment.output_dir": {
+        "v2": "runs/overnight_v2",
+        "v3": "runs/v3_long_m2"
+      },
+      "training.eval_every_steps": {
+        "v2": 50,
+        "v3": 100
+      },
+      "training.max_optimizer_steps": {
+        "v2": 300,
+        "v3": 1500
+      },
+      "training.save_every_steps": {
+        "v2": 50,
+        "v3": 100
+      }
+    },
+    "scheduler_note": "fresh linear schedule over 1500 steps; not continued from V2"
+  },
+  "stop_reason": "train_fact_joint_ge_0.95_twice",
+  "variant": "M2_FLAN_T5_MATRIX"
+}

@@ -135,3 +135,16 @@ The versioned `configs/overnight_v2.yaml` continuation changes only that debug
 budget from 200 to 500 updates and writes to `runs/overnight_v2`.
 Its completed result, including the optional M3 run, is documented in
 [the v2 feasibility report](docs/FEASIBILITY_V2_RESULT_2026-10-16.md).
+
+The isolated V3 long-budget M2 diagnostic is reproducible with:
+
+```bash
+tide v3-audit --config configs/v3_long_m2.yaml --v2-config configs/overnight_v2.yaml
+tide v3-train --config configs/v3_long_m2.yaml --v2-config configs/overnight_v2.yaml
+python scripts/plot_v3_learning_curve.py \
+  runs/v3_long_m2/learning_curve.jsonl runs/v3_long_m2/learning_curve
+```
+
+Its complete learning curve, fixed-20 generation history, protocol record, and
+best-checkpoint manifest are documented in
+[the V3 result report](docs/V3_LONG_M2_RESULT_2026-10-16.md).

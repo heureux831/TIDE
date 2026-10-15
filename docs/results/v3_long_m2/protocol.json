@@ -1,0 +1,37 @@
+{
+  "effective_batch_size": 16,
+  "protocol_changes": {
+    "experiment.mandatory_variants": {
+      "v2": [
+        "M1_FLAN_T5_LORA",
+        "M2_FLAN_T5_MATRIX"
+      ],
+      "v3": [
+        "M2_FLAN_T5_MATRIX"
+      ]
+    },
+    "experiment.optional_variants": {
+      "v2": [
+        "M3_FLAN_T5_MATRIX_AUX"
+      ],
+      "v3": []
+    },
+    "experiment.output_dir": {
+      "v2": "runs/overnight_v2",
+      "v3": "runs/v3_long_m2"
+    },
+    "training.eval_every_steps": {
+      "v2": 50,
+      "v3": 100
+    },
+    "training.max_optimizer_steps": {
+      "v2": 300,
+      "v3": 1500
+    },
+    "training.save_every_steps": {
+      "v2": 50,
+      "v3": 100
+    }
+  },
+  "scheduler_note": "fresh linear schedule over 1500 steps; not continued from V2"
+}

@@ -28,6 +28,7 @@ dependencies = [
 
 [project.optional-dependencies]
 dev = [
+  "matplotlib==3.9.2",
   "mypy==1.16.1",
   "pytest==8.4.1",
   "pytest-cov==6.2.1",
@@ -68,5 +69,6 @@ module = [
   "tide.models",
   "tide.rewrite",
   "tide.train",
+  "tide.v3_long_m2",
 ]
 ignore_errors = true

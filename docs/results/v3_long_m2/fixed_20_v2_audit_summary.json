@@ -1,0 +1,32 @@
+{
+  "checkpoint": "/root/autodl-tmp/TIDE/runs/overnight_v2/M2_FLAN_T5_MATRIX/best.pt",
+  "counts": {
+    "number_or_unit_error": 20,
+    "parser_error": 0,
+    "required_fact_deleted": 0
+  },
+  "fixed_example_ids": [
+    "src_000000_A",
+    "src_000000_B",
+    "src_000001_A",
+    "src_000001_B",
+    "src_000002_A",
+    "src_000002_B",
+    "src_000003_A",
+    "src_000003_B",
+    "src_000004_A",
+    "src_000004_B",
+    "src_000005_A",
+    "src_000005_B",
+    "src_000006_A",
+    "src_000006_B",
+    "src_000007_A",
+    "src_000007_B",
+    "src_000008_A",
+    "src_000008_B",
+    "src_000009_A",
+    "src_000009_B"
+  ],
+  "parser_revision_required": false,
+  "review_status": "human_review_complete: all 20 preserve the fact type/unit frame but use wrong numeric values; no parser error"
+}
